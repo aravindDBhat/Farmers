@@ -8,7 +8,7 @@ class Database
 	
 	private $con;
 	public function connect(){
-		$this->con = new Mysqli("localhost", "root", "", "mysql");
+		$this->con = new Mysqli("localhost", "root", "", "ecom");
 		return $this->con;
 	}
 }

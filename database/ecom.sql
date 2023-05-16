@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2019 at 06:46 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.4
+-- Generation Time: May 11, 2023 at 04:46 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `khanstore`
+-- Database: `ecom`
 --
 
 -- --------------------------------------------------------
@@ -34,18 +33,14 @@ CREATE TABLE `admin` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `is_active` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `name`, `email`, `password`, `is_active`) VALUES
-(3, 'Rizwan', 'rizwan@gmail.com', '$2y$10$Z1DnKbJRDFUTHMI7y1vSqeU3.Y9cgDyC4AeWx4.ucH34z/mkzL2E.', '0'),
-(4, 'ajay', 'ajay@gmail.com', '$2y$10$UGzx/ODNB4ZSFruRF8BN2eC/NNE.6MBhfTTYKtUo.k4ZVHZFD85DO', '0'),
-(5, 'Rizwan', 'rizwankhan@gmail.com', '$2y$10$qZ0OoyX8bhAVxDFM/fx8leZSZwlyq15c1C/KTnaqDLSx6eCDJ0VpC', '0'),
-(6, 'Faizan', 'faizan@gmail.com', '$2y$10$Ll2.sETLuB8sdhh1LRK4e.cQqn4CtTEudFg.exhf76D6rGzSOwWNm', '0'),
-(7, 'Ajay Kumar', 'ajaykumar@gmail.com', '$2y$10$8GlkawEDsNrOQr8Vgv0GceD/MhVpHAXM4xqtMo0.SUaHFXe03MRdi', '0');
+(8, 'Akhilesh Mali', 'akhilesh.mali23@gmail.com', '$2y$10$1kZvZt1P31Jk0unG7rCjfeNaxYl2bypLv.u7GqvMFlSzjq5k4jVVG', '0');
 
 -- --------------------------------------------------------
 
@@ -56,18 +51,19 @@ INSERT INTO `admin` (`id`, `name`, `email`, `password`, `is_active`) VALUES
 CREATE TABLE `brands` (
   `brand_id` int(100) NOT NULL,
   `brand_title` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `brands`
 --
 
 INSERT INTO `brands` (`brand_id`, `brand_title`) VALUES
-(1, 'HP'),
-(2, 'Samsung'),
-(3, 'Apple'),
-(4, 'Sony'),
-(5, 'LG');
+(2, 'John Deer'),
+(3, 'JCB'),
+(4, 'Case Hi'),
+(5, 'FenDT'),
+(6, 'Others'),
+(7, 'Pottinger');
 
 -- --------------------------------------------------------
 
@@ -81,7 +77,14 @@ CREATE TABLE `cart` (
   `ip_add` varchar(250) NOT NULL,
   `user_id` int(10) DEFAULT NULL,
   `qty` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `p_id`, `ip_add`, `user_id`, `qty`) VALUES
+(1, 1, '::1', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -92,19 +95,18 @@ CREATE TABLE `cart` (
 CREATE TABLE `categories` (
   `cat_id` int(100) NOT NULL,
   `cat_title` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`cat_id`, `cat_title`) VALUES
-(2, 'Ladies Wearss'),
-(3, 'Mens Wear'),
-(4, 'Kids Wear'),
-(5, 'Furnitures'),
-(6, 'Home Appliances'),
-(12, 'Mobiles');
+(2, 'Fertilizers'),
+(3, 'Tractors'),
+(4, 'Harvesters'),
+(5, 'Miscellenious'),
+(6, 'Grass Maintenance');
 
 -- --------------------------------------------------------
 
@@ -119,7 +121,7 @@ CREATE TABLE `orders` (
   `qty` int(11) NOT NULL,
   `trx_id` varchar(255) NOT NULL,
   `p_status` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `orders`
@@ -147,17 +149,29 @@ CREATE TABLE `products` (
   `product_desc` text NOT NULL,
   `product_image` text NOT NULL,
   `product_keywords` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_title`, `product_price`, `product_qty`, `product_desc`, `product_image`, `product_keywords`) VALUES
-(1, 12, 2, 'Samsung Galaxy S10', 10000, 50, 'Its a good phone', '1552670517_sumsung galaxy s8.png', 'samsung, mobile, galaxy'),
-(2, 12, 3, 'Iphone 7 plus', 40000, 5000, 'Iphone is a good phone', '1552670718_iphone-7-plus.jpg', 'apple, iphone, mobile'),
-(4, 12, 2, 'Samsung Galaxy S6', 5000, 100, 'Samsung is a good phone', '1552670857_samsung galaxy s6.jpg', 'samsung, mobile, s6'),
-(5, 12, 2, 'Samsung Galaxy S10', 5000, 5000, 'Samsung Galaxy S10', '1552671096_7-2-samsung-mobile-phone-png-clipart-thumb.png', 'samsung, mobile, s10');
+(8, 2, 6, 'Corteva Solid Fertilizer', 1000, 2000, 'Solid Fertilizers for boosting Production.', '1683812009_1670778291_Corteva-Solid-Fertilizer.png', 'Fertilizer, solid, corteva'),
+(9, 2, 6, 'Lizard Lime Fertilizer', 1500, 1500, 'Lime Fertilizer for Boosting Crop Production!', '1683812077_1670778362_Lizard-Lime-Fertilizer.png', 'Fertilizer, lime fertilizer, lizard'),
+(10, 3, 2, 'John Deer 7R series (per/hour)', 400, 100, 'Tractors for Rent! Best and Affordable!', '1683812165_1670778421_John-Deer-7R-series.png', 'tractor, john deer, 7r'),
+(11, 3, 2, 'John Deer 8XR series (per/hour)', 600, 100, 'Tractors for Rent! Best and Affordable!', '1683812313_1670778460_John-Deer-8XR-series.png', 'john deer, 8xr, tractor'),
+(12, 3, 4, 'Case Hi Steiger Wheeled AFS Connect Series (per/hour)', 600, 100, 'Tractors for Rent! Best and Affordable!', '1683812380_1670778497_Case-Hi-Steiger-Wheeled-AFS-Connect-Series.png', 'Case Hi, Steiger, wheeled, tractor'),
+(13, 3, 3, 'JCB Fastrac 8330 (per/hour)', 700, 100, 'Tractors for Rent! Best and Affordable!', '1683812479_1670778667_JCB-Fastrac-8330.png', 'JCB, fastrac, tractor'),
+(14, 3, 3, 'JCB 541-70 Agri Pro (per/hour)', 750, 100, 'Tractors for Rent! Best and Affordable!', '1683812518_1670778703_JCB-541-70-Agri-Pro.png', 'JCB, fastrac, Agri, pro, tractor'),
+(15, 6, 4, 'Case Hi LB436 HD Grass/Crop Baler', 1250, 150, 'Create Bales to easily Move the Grass from Farms!', '1683812821_1670778548_Case-Hi-LB436-HD-Grass.Crop Baler.png', 'grass, mover, baler, Case Hi, lb436'),
+(16, 6, 6, 'MAN TGS 18.500 4x4 (per/hour)', 2500, 150, 'Trucks for Rent! No Trailers.', '1683812911_1670778633_MAN-TGS-18.500-4x4.png', 'man, truck, rent, TGS, 18.500'),
+(17, 4, 5, 'FenDT Ideal Crop Harvester (per/hour)', 1800, 150, 'FenDT is a Crop Harvester mainly for Corn, Wheat, Flowers and a few more!', '1683813078_1670778870_FenDT-Ideal.png', 'fendt, Ideal, harvester, rent, crop'),
+(18, 6, 7, 'Pottinger Novacat 810 Cross Flow', 400, 100, 'Got a Big Backyard? Running a Business? \r\nThis Grass Mover can do Double the Work!', '1683814295_1670778994_Novacat-810-Cross-Flow.png', 'Pottinger, field equiment, mover, grass'),
+(19, 6, 7, 'Pottinger Novacat 301 AM Ed Pro', 300, 100, 'Grass Mover prefect for Small Scale Usage!', '1683815023_1670778960_Novacat-301-AM-ED-Pro.png', 'Pottinger, field equiment, mover, grass'),
+(20, 6, 6, 'Aebi CC 66 Hand Mover', 150, 100, 'Have a Backyard? Need to Move some Grass?\r\nThis HandHeld Grass Mover loves you!!', '1683815247_1670779169_Aebi-CC-66-Hand-Mover.png', 'Hand, Mover, home, appliances'),
+(21, 6, 7, 'Jumbo 10020 D Combiline Grass Collector', 1500, 100, 'Grass Collector', '1683815600_Jumbo-10020-D-Combiline-Grass-Collector.png', 'Pottinger, field, grass, collector'),
+(22, 6, 7, 'Hit 16.18 T Wind Rower', 700, 100, 'Wind Rower. Dry your Grass within Seconds!!', '1683815648_Hit-16.18-T-Wind-Rower.png', 'Pottinger, field, grass, wind, rower'),
+(23, 5, 2, 'John Deer Pickup 1150 Load Weight', 150, 100, 'Weight Add-ons for your Tractor. A Perfect Balanced weight is a MUST!!!', '1683815727_Pickup-1150.png', 'weight, john, deer, load, misc');
 
 -- --------------------------------------------------------
 
@@ -174,15 +188,14 @@ CREATE TABLE `user_info` (
   `mobile` varchar(10) NOT NULL,
   `address1` varchar(300) NOT NULL,
   `address2` varchar(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `user_info`
 --
 
 INSERT INTO `user_info` (`user_id`, `first_name`, `last_name`, `email`, `password`, `mobile`, `address1`, `address2`) VALUES
-(1, 'Rizwan', 'Khan', 'rizwankhan.august16@gmail.com', '25f9e794323b453885f5181f1b624d0b', '8389080183', 'Rahmat Nagar Burnpur Asansol', 'Asansol'),
-(2, 'Rizwan', 'Khan', 'rizwankhan.august16@yahoo.com', '25f9e794323b453885f5181f1b624d0b', '8389080183', 'Rahmat Nagar Burnpur Asansol', 'Asa');
+(3, 'Akhilesh', 'Mali', 'akhilesh.mali23@gmail.com', '526db1beb3db97a203dc1468f5d8db02', '0886790664', '23/1, Huttaleshwari Temple Road, Milk Colony', 'Malleshwara');
 
 --
 -- Indexes for dumped tables
@@ -241,19 +254,19 @@ ALTER TABLE `user_info`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `brand_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -271,13 +284,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `product_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
